@@ -18,6 +18,21 @@ app.get("/data", (req, res) => {
   });
 });
 
+app.get("/file/:id", async (req,res) => {
+    const id = req.params.id;
+    let data;
+
+    try{
+        data = await fs.readFile(`data/files/${id}.txt`, "utf-8");
+    } catch (err){
+        return res.sendStatus(404);
+    }
+
+    return res.json({
+        data: data
+    })
+})
+
 app.post("/add", async (req, res) => {
   const id = uuid();
   const content = req.body.content;
