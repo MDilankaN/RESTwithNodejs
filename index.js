@@ -26,9 +26,12 @@ app.post("/add", async (req, res) => {
     return res.status(400);
   }
 
-  await fs.mkdir("data/files", { recursive: true });
+  await fs.mkdir(`data/files/`, { recursive: true });
+  await fs.writeFile(`data/files/${id}.txt`, content);
 
-  res.sendStatus(201);
+  res.sendStatus(201).json({
+    id: id
+  });
 });
 
-app.listen(300, () => console.log("running"));
+app.listen(3000, () => console.log("running"));
